@@ -1,20 +1,32 @@
-# linked list 
 
 class Node :
-    '''
-    Node is an element of a linked list.
-    Contains:
-    - self.data : data of the element of linked list
-    - self.next : link to the next node of linked list
-    '''
+    """
+    A class representing an element (node) in a linked list.
+
+    Attributes :
+    - data : The data stored in the element (node).
+    - next : A reference to the next element (node) in the linked list.
+    """
+
     def __init__(self, data) :
+        """
+        Initialize a new element (node) with the given data.
+        """
+
         self.data = data
         self.next = None
 
 class LinkedList :
+    """
+    A class representing a linked list. 
+    """
+
     def __init__(self) -> None:
         self.head = None
-    def append(self, data) -> None: # Adds element to the end of the list
+    def append(self, data) -> None: 
+        """
+        Adds element with "data" to the end of the linked list.
+        """
         new_node = Node(data)
         if not self.head : 
             self.head = new_node
@@ -25,7 +37,10 @@ class LinkedList :
                 prev_node = cur_node
                 cur_node = cur_node.next
             prev_node.next = new_node
-    def print_list(self) -> None: # Prints data of all elements of the list 
+    def print_list(self) -> None:
+        '''
+        Prints all elements of a linked list.
+        '''
         cur_node = self.head
         if not cur_node :
             print('List is empty')
@@ -34,11 +49,17 @@ class LinkedList :
                 print(cur_node.data, end=' ')
                 cur_node = cur_node.next
         print()
-    def prepend(self, data) -> None: # Adds element in the beginning of the list
+    def prepend(self, data) -> None: 
+        '''
+        Adds new element in the beginning of the list.
+        '''
         new_node = Node(data)
         new_node.next = self.head
         self.head = new_node
-    def insert_after(self, after_data, insert_data) -> None: # Inserts element after element with 'after_data'
+    def insert_after(self, after_data, insert_data) -> None:
+        '''
+        Inserts new element after element with 'after_data'.
+        '''
         new_node = Node(insert_data)
         cur_node = self.head
         while cur_node and cur_node.data != after_data :
@@ -47,7 +68,10 @@ class LinkedList :
             raise ValueError ('Incorrenct input "after_data" : ' + str(after_data))
         new_node.next = cur_node.next
         cur_node.next = new_node
-    def delete_data(self, data) -> None: # Deletes element with 'data'
+    def delete_data(self, data) -> None: 
+        '''
+        Deletes element with 'data'.
+        '''
         prev_node = None
         cur_node = self.head
         while cur_node and cur_node.data != data :
@@ -61,7 +85,10 @@ class LinkedList :
         else :
             prev_node.next = cur_node.next
             cur_node = None
-    def delete_ind(self, ind:int) -> None: # Deletes element with particular index
+    def delete_ind(self, ind:int) -> None: 
+        '''
+        Deletes element with particular index.
+        '''
         cur_node = self.head
         if not cur_node :
             raise ValueError ('The list is empty!')
@@ -79,14 +106,20 @@ class LinkedList :
         else :
             prev_node.next = cur_node.next
             cur_node = None
-    def length(self) -> int: # Returns length of the list
+    def length(self) -> int: 
+        '''
+        Returns length of the list.
+        '''
         count = 0
         cur_node = self.head
         while cur_node :
             cur_node = cur_node.next
             count += 1 
         return count
-    def swap_nodes(self, data_1, data_2) -> None: # Swaps places of elements with values "data_1" and "data_2"
+    def swap_nodes(self, data_1, data_2) -> None: 
+        '''
+        Interchange elements with 'data_1' and 'data_2'.
+        '''
         if data_1 == data_2 :
             raise ValueError ('Incorrect input : "data_1" and "data_2" are the same: ' + str(data_1))
         
@@ -117,7 +150,10 @@ class LinkedList :
             prev_node_2.next = cur_node_1
 
         cur_node_1.next, cur_node_2.next = cur_node_2.next, cur_node_1.next
-    def reverse(self) -> None: # Reverses the list
+    def reverse(self) -> None: 
+        '''
+        Reverses the linked list.
+        '''
         cur_node = self.head
         prev_node = None
         if not cur_node :
@@ -128,7 +164,10 @@ class LinkedList :
             prev_node = cur_node
             cur_node = next_node
         self.head = prev_node
-    def remove_duplicates(self) -> None: # Removes all duplicates from the llist
+    def remove_duplicates(self) -> None: 
+        '''
+        Removes all duplicates from the linked list.
+        '''
         data_values = dict()
         prev_node = None
         cur_node = self.head
@@ -140,7 +179,10 @@ class LinkedList :
             else :
                 prev_node.next = cur_node.next
                 cur_node = cur_node.next
-    def get_element(self, index:int) : # Returns element with particular index. Index can be negative
+    def get_element(self, index:int) : 
+        '''
+        Returns element with particular index. Index can be negative.
+        '''
         if index >= 0 :
             cur_node = self.head
             count = 0
@@ -164,7 +206,10 @@ class LinkedList :
             if count != index :
                 raise ValueError ('Index is out of range: ' + str(index))
             return ind_nodes_before.data
-    def count_occurences(self, data) -> int : # Returns number of occurences of a particulal value in the llist
+    def count_occurences(self, data) -> int : 
+        '''
+        Returns number of occurences of a particulal 'data' in the linked list.
+        '''
         count = 0
         cur_node = self.head
         while cur_node :
@@ -172,24 +217,10 @@ class LinkedList :
                 count += 1 
             cur_node = cur_node.next
         return count
-    def rotate(self, index) -> None: # Moves all the elements after index element to the beginning of the list
-        target_node = self.head
-        count = 0
-        while target_node and count != index :
-            count += 1
-            target_node = target_node.next
-        if not target_node :
-            raise ValueError ('Index is out of range: ' + str(index))
-        if not target_node.next :
-            raise ValueError ('Index points to the last element in the llist, nothing to rotate!' + str(index))
-        
-        cur_node = target_node
-        while cur_node.next : # Searching for the last element in the list
-            cur_node = cur_node.next
-        cur_node.next = self.head
-        self.head = target_node.next
-        target_node.next = None
-    def move_tail_to_head(self) -> None: # Moves last element on the first position
+    def move_tail_to_head(self) -> None:
+        '''
+        Moves last element of the first place.
+        '''
         prev_node = None
         cur_node = self.head
         while cur_node.next :
@@ -198,7 +229,3 @@ class LinkedList :
         cur_node.next = self.head
         self.head = cur_node
         prev_node.next = None
-
-
-
-
