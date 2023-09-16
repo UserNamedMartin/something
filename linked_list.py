@@ -25,7 +25,7 @@ class LinkedList :
                 prev_node = cur_node
                 cur_node = cur_node.next
             prev_node.next = new_node
-    def print_list(self) -> None: # Prints elements of the list 
+    def print_list(self) -> None: # Prints data of all elements of the list 
         cur_node = self.head
         if not cur_node :
             print('List is empty')
@@ -128,39 +128,6 @@ class LinkedList :
             prev_node = cur_node
             cur_node = next_node
         self.head = prev_node
-    def merge_sorted(self, llist) -> None: # Merges two sorted llists in one sorted llist 
-        small_node = None
-        cur_node_1 = self.head
-        cur_node_2 = llist.head
-        if not cur_node_1 :
-            raise ValueError ('Initial list is empty')
-        if not cur_node_2 :
-            raise ValueError ('Given list is empty')
-        
-        if cur_node_1.data > cur_node_2.data :
-            small_node = cur_node_2
-            cur_node_2 = cur_node_2.next
-        else :
-            small_node = cur_node_1
-            cur_node_1 = cur_node_1.next
-        new_head = small_node
-
-        while cur_node_1 and cur_node_2 :
-            if cur_node_1.data <= cur_node_2.data :
-                small_node.next = cur_node_1
-                small_node = small_node.next
-                cur_node_1 = cur_node_1.next
-            if cur_node_1.data > cur_node_2.data :
-                small_node.next = cur_node_2
-                small_node = small_node.next
-                cur_node_2 = cur_node_2.next
-
-        if not cur_node_1 :
-            small_node.next = cur_node_2
-        if not cur_node_2 :
-            small_node.next = cur_node_1
-        
-        self.head = new_head
     def remove_duplicates(self) -> None: # Removes all duplicates from the llist
         data_values = dict()
         prev_node = None
@@ -205,17 +172,7 @@ class LinkedList :
                 count += 1 
             cur_node = cur_node.next
         return count
-    '''
-    def count_recursive(self, data) -> int : # Does the same as previous, but recursive way
-        def count(node, data) :
-            if not node :
-                return 0
-            if node.data == data :
-                return 1 + count(node.next, data)
-            return count(node.next, data)
-        return count(self.head, data)
-    '''
-    def rotate(self, index) -> None: # Moves all the elements after index element to the end of the list
+    def rotate(self, index) -> None: # Moves all the elements after index element to the beginning of the list
         target_node = self.head
         count = 0
         while target_node and count != index :
@@ -232,7 +189,7 @@ class LinkedList :
         cur_node.next = self.head
         self.head = target_node.next
         target_node.next = None
-    def move_tail_to_head(self) -> None:
+    def move_tail_to_head(self) -> None: # Moves last element on the first position
         prev_node = None
         cur_node = self.head
         while cur_node.next :
@@ -241,35 +198,7 @@ class LinkedList :
         cur_node.next = self.head
         self.head = cur_node
         prev_node.next = None
-    def sum_two_lists(self, llist):
-        def get_int(llist) :
-            num = 0
-            tens = 1
-            cur_node = llist.head
-            while cur_node :
-                num += cur_node.data * tens
-                cur_node = cur_node.next
-                tens *= 10
-            return num
-        return get_int(self) + get_int(llist)
 
 
-
-# 3 6 5 
-#   4 2 
-# ------
-#  
-llist1 = LinkedList()
-llist1.append(5)
-llist1.append(6)
-llist1.append(3)
-
-llist2 = LinkedList()
-llist2.append(8)
-llist2.append(4)
-llist2.append(2)
-
-print(365 + 248)
-print(llist1.sum_two_lists(llist2))
 
 
